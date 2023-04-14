@@ -2,6 +2,14 @@
 
 > composer create-project laravel/laravel ourfirstsapp
 
+# Original Git
+
+https://github.com/LearnWebCode/laravel-course
+
+# This git
+
+https://github.com/samedan/2304_Laravel_10
+
 # Clear cache in Views
 
 > php artisan view:clear
