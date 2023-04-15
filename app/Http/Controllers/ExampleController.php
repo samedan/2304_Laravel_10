@@ -14,6 +14,6 @@ class ExampleController extends Controller
         return view('homepage', ["allAnimals" => $animals, 'name' => $ourName, 'catname' => "mitza"]); // app/resources/views/homepage.blade.php
     }
     public function aboutPage () {
-        return '<h1>About page</h1><a href="/">Home page</a>';
+        return view("single-post");
     }
 }
