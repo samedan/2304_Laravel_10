@@ -8,6 +8,16 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    // ShowCorrectHomepage
+    public function showCorrectHomepage() {
+        if (auth()->check()) {
+            return view('homepage-feed');
+        } else {
+            return view('homepage');
+        }
+    }
+
+    // REGISTER
     public function register(Request $request) {
         $incomingFields = $request->validate([
             'username' => ['required', 'min:3', 'max:20', Rule::unique('users', 'username')],
@@ -18,6 +28,7 @@ class UserController extends Controller
         User::create($incomingFields);
         return 'test';
     }
+    // LOGIN
     public function login(Request $request) {
         $incomingFields = $request->validate([
             'loginusername' => ['required'],
@@ -27,7 +38,7 @@ class UserController extends Controller
             'username' => $incomingFields['loginusername'],
             'password' => $incomingFields['loginpassword']
             ])) {
-                $request->session()->regenerate();
+                $request->session()->regenerate(); // COOKIE
                 return 'Login success';
         } else {
             return "Sorry";
@@ -35,14 +46,5 @@ class UserController extends Controller
         User::create($incomingFields);
         return 'test';
     }
-
-    public function showCorrectHomepage() {
-        if (auth()->check()) {
-            return view('homepage-feed');
-        } else {
-            return view('homepage');
-        }
-
-
-    }
+    
 }

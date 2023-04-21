@@ -50,11 +50,12 @@
         
       </div>
     </header>
-<!-- header ends here -->
 
-{{$slot}}
+    <!-- header ends here -->
 
-  <!-- footer begins -->
+        {{$slot}}
+
+    <!-- footer begins -->
   <footer class="border-top text-center small text-muted py-3">
    <p class="m-0">Copyright &copy; 2023 <a href="/" class="text-muted">OurApp</a>. All rights reserved.</p>
  </footer>
