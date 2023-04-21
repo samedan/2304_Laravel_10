@@ -25,8 +25,9 @@ class UserController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
         $incomingFields['password'] = bcrypt($incomingFields['password']);
-        User::create($incomingFields);
-        return 'test';
+        $user = User::create($incomingFields); // return the registered user
+        auth()->login($user); // login the registered user with a cookie
+        return redirect('/')->with('success', 'Thank you for creating your account');
     }
     // LOGIN
     public function login(Request $request) {
@@ -39,12 +40,17 @@ class UserController extends Controller
             'password' => $incomingFields['loginpassword']
             ])) {
                 $request->session()->regenerate(); // COOKIE
-                return 'Login success';
+                return redirect('/')->with('success', 'You have successfully logged in.'); // redirect with a message named 'success'
         } else {
-            return "Sorry";
+            return redirect('/')->with('failure', 'Invalid login');
         }
         User::create($incomingFields);
         return 'test';
+    }
+    //LOGOUT
+    public function logout() {
+        auth()->logout();
+        return redirect("/")->with('success', 'You are now logged out.');;
     }
     
 }
