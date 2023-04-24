@@ -2,6 +2,10 @@
 
 > composer create-project laravel/laravel ourfirstsapp
 
+# Course source
+
+https://www.udemy.com/course/lets-learn-laravel-a-guided-path-for-beginners
+
 # Original Git
 
 https://github.com/LearnWebCode/laravel-course
