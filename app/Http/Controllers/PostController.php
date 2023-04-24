@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function viewSinglePost(Post $post) {
-        return view('single-post', ['post'=> $post]);
-
-        
+        $post["body"] = strip_tags(
+            Str::markdown($post->body), 
+            '<p><ul><ol><li><strong><h3><br>' // allowed elements
+        ); 
+        return view('single-post', ['post'=> $post]);        
     }
     
     public function storeNewPost(Request $request) {
