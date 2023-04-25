@@ -13,6 +13,7 @@ class UserController extends Controller
         // return $user->posts()->get(); // posts() is defined in User.php
         return view('profile-posts', [
             'username' => $user->username, 
+            'isAdmin' => $user->isAdmin,
             'posts' => $user->posts()->latest()->get(),
             'postCount' => $user->posts()->count()
         ]);

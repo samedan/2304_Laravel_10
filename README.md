@@ -28,6 +28,10 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 > php artisan migrate:fresh
 > php artisan make:migration add_favourite_color_column
 
+# Add Column to existing table
+
+> php artisan make:migration add_isadmin_to_users_table --table=users
+
 # New Post
 
 > php artisan make:controller PostController
