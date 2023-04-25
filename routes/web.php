@@ -19,12 +19,12 @@ use App\Http\Controllers\UserController;
 // USER routes
 Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login'); // rename the page "name"
 
-Route::post('/register', [UserController::class, "register"]);
-Route::post('/login', [UserController::class, "login"]);
-Route::post('/logout', [UserController::class, "logout"]);
+Route::post('/register', [UserController::class, "register"])->middleware('guest');
+Route::post('/login', [UserController::class, "login"])->middleware('guest');
+Route::post('/logout', [UserController::class, "logout"])->middleware('mustBeLoggedIn');
 
 // BLOG Routes
-Route::get("/create-post", [PostController::class, "showCreateForm"])->middleware('auth');
-Route::post("/create-post", [PostController::class, "storeNewPost"]);
+Route::get("/create-post", [PostController::class, "showCreateForm"])->middleware('mustBeLoggedIn');
+Route::post("/create-post", [PostController::class, "storeNewPost"])->middleware('mustBeLoggedIn');
 
 Route::get("/post/{post}", [PostController::class, "viewSinglePost"]);
