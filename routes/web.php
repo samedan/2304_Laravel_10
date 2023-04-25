@@ -18,11 +18,8 @@ use App\Http\Controllers\UserController;
 
 // ADMIN routes
 Route::get('/admins-only', function() {
-   if(Gate::allows('visitAdminPages')) {
     return "only visible to admins";
-   }
-   return "Not available";
-});
+})->middleware('can:visitAdminPages');
 
 // USER routes
 Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login'); // rename the page "name"
