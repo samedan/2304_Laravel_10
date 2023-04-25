@@ -28,3 +28,7 @@ Route::get("/create-post", [PostController::class, "showCreateForm"])->middlewar
 Route::post("/create-post", [PostController::class, "storeNewPost"])->middleware('mustBeLoggedIn');
 
 Route::get("/post/{post}", [PostController::class, "viewSinglePost"]);
+
+// PROFILE routes
+Route::get('/profile/{user:username}', // look for the user using 'username', not teh default 'id'
+  [UserController::class, 'profile']);

@@ -8,6 +8,16 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    // PROFILE
+    public function profile(User $user) {
+        // return $user->posts()->get(); // posts() is defined in User.php
+        return view('profile-posts', [
+            'username' => $user->username, 
+            'posts' => $user->posts()->latest()->get(),
+            'postCount' => $user->posts()->count()
+        ]);
+    }
+
     // ShowCorrectHomepage
     public function showCorrectHomepage() {
         if (auth()->check()) {
