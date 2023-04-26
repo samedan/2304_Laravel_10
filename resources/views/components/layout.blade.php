@@ -29,14 +29,20 @@
                   <a href="/profile/{{auth()->user()->username}}" class="mr-2" style=" border:3px; border-radius:3px; border-radius: 3px;
                     padding-bottom: 5px;">
 
-                        <img title="My Profile" data-toggle="tooltip" data-placement="bottom"  style="width: 32px; height: 32px; border-radius: 16px" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /> 
+                        <img title="My Profile" data-toggle="tooltip" data-placement="bottom"  
+                          style="width: 32px; height: 32px; border-radius: 16px" 
+                          src="{{auth()->user()->avatar}}" /> 
+                          {{-- https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128 --}}
                         <small style="color:#ffffff">Admin</small>
 
                   </a>
                 </button>
               
                 @else
-                  <a href="/profile/{{auth()->user()->username}}" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /> 
+                  <a href="/profile/{{auth()->user()->username}}" class="mr-2">
+                    <img title="My Profile" data-toggle="tooltip" data-placement="bottom" 
+                    style="width: 32px; height: 32px; border-radius: 16px" 
+                    src="{{auth()->user()->avatar}}" /> 
                 @endif
 
               <a class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>

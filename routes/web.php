@@ -18,8 +18,8 @@ use App\Http\Controllers\UserController;
 
 // ADMIN routes
 Route::get('/admins-only', function() {
-    return "only visible to admins";
-})->middleware('can:visitAdminPages');
+                return "only visible to admins";
+            })->middleware('can:visitAdminPages'); // Gate defined in AuthServiceProvider
 
 // USER routes
 Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login'); // rename the page "name"
@@ -27,6 +27,10 @@ Route::get('/', [UserController::class, "showCorrectHomepage"])->name('login'); 
 Route::post('/register', [UserController::class, "register"])->middleware('guest');
 Route::post('/login', [UserController::class, "login"])->middleware('guest');
 Route::post('/logout', [UserController::class, "logout"])->middleware('mustBeLoggedIn');
+
+// AVATAR
+Route::get('/manage-avatar', [UserController::class, "showAvatarForm"])->middleware('mustBeLoggedIn');
+Route::post('/manage-avatar', [UserController::class, "storeAvatar"])->middleware('mustBeLoggedIn');
 
 // BLOG Routes
 Route::get("/create-post", [PostController::class, "showCreateForm"])->middleware('mustBeLoggedIn');
