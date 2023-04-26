@@ -34,8 +34,8 @@ Route::get('/manage-avatar', [UserController::class, "showAvatarForm"])->middlew
 Route::post('/manage-avatar', [UserController::class, "storeAvatar"])->middleware('mustBeLoggedIn');
 
 // FOLLOW Routes
-Route::post('/create-follow/{userVictim:username}', [FollowController::class, 'createFollow'])->middleware('mustBeLoggedIn');
-Route::post('/remove-follow/{userVictim:username}', [FollowController::class, 'removeFollow'])->middleware('mustBeLoggedIn');
+Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('mustBeLoggedIn');
+Route::post('/remove-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('mustBeLoggedIn');
 
 // BLOG Routes
 Route::get("/create-post", [PostController::class, "showCreateForm"])->middleware('mustBeLoggedIn');
