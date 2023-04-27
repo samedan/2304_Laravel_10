@@ -50,6 +50,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function followers() { // who is following you
+        return $this->hasMany(Follow::class, 'followeduser'); // foreignKey = followedUser
+    }
+    public function followingTheseUsers() { // those you are following
+        return $this->hasMany(Follow::class, 'user_id'); // foreignKey = user_id
+    }
+
     public function posts() {
         return $this->hasMany(Post::class, 'user_id');
     }
