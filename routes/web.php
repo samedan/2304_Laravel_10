@@ -49,4 +49,6 @@ Route::put('/post/{post}', [PostController::class, 'actuallyUpdate'])->middlewar
 // PROFILE routes
 Route::get('/profile/{user:username}', // look for the user using 'username', not teh default 'id'
      [UserController::class, 'profile']);
+Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
+Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
 
