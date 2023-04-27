@@ -3,6 +3,7 @@
   <div class="container py-md-5 container--narrow">
 
     @unless($posts->isEmpty())
+      <!-- IF YES Posts -->
       <h2 class="text-center mb-4">The Latest from those you follow:</h2>
       <div class="list-group">
         @foreach ($posts as $post)
@@ -12,6 +13,8 @@
            </a>
         @endforeach
         </div>
+        <!-- Pagination UserController -> showCorrectHomepage -> pagination(4)-->
+        <div class="mt-4">{{$posts->links()}} </div>
     @else 
         <!-- IF No Posts -->
         <div class="text-center">
