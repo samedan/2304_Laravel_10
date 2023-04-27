@@ -50,6 +50,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function feedPosts () {
+        return $this->hasManyThrough(
+            Post::class, // Model that we end up with
+            Follow::class, // Table has the data before accessing Post (1)
+            'user_id', // culomn on Follow table with the user that follows
+            'user_id', // foreigKey on the final model Post(1)
+            'id', // local key, it's the User model, this file
+            'followeduser'); // local key on the intermidiate table (Follow (2))
+    }
+
     public function followers() { // who is following you
         return $this->hasMany(Follow::class, 'followeduser'); // foreignKey = followedUser
     }

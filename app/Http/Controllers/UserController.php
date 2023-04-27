@@ -82,8 +82,9 @@ class UserController extends Controller
 
     // ShowCorrectHomepage
     public function showCorrectHomepage() {
-        if (auth()->check()) {
-            return view('homepage-feed');
+        if (auth()->check()) { 
+            // if logged in
+            return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->get()]);
         } else {
             return view('homepage');
         }
