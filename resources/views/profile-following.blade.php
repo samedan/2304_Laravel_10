@@ -1,4 +1,6 @@
-<x-profile :sharedData="$sharedData"> <!-- sharedData comes from UserController -->
+<x-profile :sharedData="$sharedData" doctitle="Who {{$sharedData['username']}} follows"> 
+  <!-- sharedData comes from UserController -->
+  <!-- doctitle comes from UserController -->
 
  <div class="list-group">
    @foreach ($following as $follow)

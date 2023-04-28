@@ -1,4 +1,5 @@
-<x-layout>
+<x-layout doctitle="Create new post"> 
+  <!-- doctitle comes from UserController -->
 
  <div class="container py-md-5 container--narrow">
   <form action="/create-post" method="POST">

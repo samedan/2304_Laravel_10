@@ -1,11 +1,10 @@
-<x-profile :sharedData="$sharedData"> <!-- sharedData comes from UserController -->
+<x-profile :sharedData="$sharedData" doctitle="{{$sharedData['username']}}'s Profile"> 
+  <!-- sharedData comes from UserController -->
+  <!-- doctitle comes from profile.blade.php -->
 
   <div class="list-group">
     @foreach ($posts as $post)
-        <a href="/post/{{$post->id}}" class="list-group-item list-group-item-action">
-         <img class="avatar-tiny" src="{{$post->user->avatar}}" />
-         <strong>{{$post->title}}</strong> on {{$post->created_at->format('n/j/Y')}}
-       </a>
+      <x-post :post="$post" hideAuthor /> <!-- load /views/components/post.blade -->
     @endforeach
     </div>
 

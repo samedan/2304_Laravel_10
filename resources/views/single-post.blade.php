@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :doctitle="$post->title"> <!-- Pass title to layout.blade.php -->
    
 
     <div class="container py-md-5 container--narrow">

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :doctitle="$doctitle"> <!-- doctitle comes from profile.blade.php -->
 
  <div class="container py-md-5 container--narrow">
   <h2>
