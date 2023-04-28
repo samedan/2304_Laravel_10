@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    // SEARCH post
+    public function search($term) {
+        $posts = Post::search($term)->get(); // 'use Searchable' on the Post model
+        // complete returned user data, not only 'id'
+        $posts->load('user:id,username,avatar');
+        return $posts;
+    }
+
+    // UPDATE Post
     public function actuallyUpdate(Post $post, Request $request) {
         $incomingFields = $request->validate([
             'title' => 'required',
@@ -17,13 +26,14 @@ class PostController extends Controller
         $incomingFields['body'] = strip_tags($incomingFields['body']);
         $post->update($incomingFields);
         return back()->with('success', 'Post succesfully updated');
-
     }
 
+    // show edit form
     public function showEditForm(Post $post) {
         return view('edit-post', ['post' => $post]);
     }
 
+    // DELETE Post
     public function delete(Post $post) {
         // check the permission
         
@@ -31,6 +41,7 @@ class PostController extends Controller
         return redirect('/profile/'.auth()->user()->username)->with('success', 'Post succesffully deleted');
     }
 
+    // GET Post
     public function viewSinglePost(Post $post) {
         $post["body"] = strip_tags(
             Str::markdown($post->body), 
@@ -39,6 +50,7 @@ class PostController extends Controller
         return view('single-post', ['post'=> $post]);        
     }
     
+    // POST Post
     public function storeNewPost(Request $request) {
         $incomingFields = $request->validate([
             'title'=>'required',
@@ -51,6 +63,7 @@ class PostController extends Controller
         return redirect("/post/{$newPost->id}")->with("success", "New post succesfully created");
     }
 
+    // show post form
     public function showCreateForm() {
         return view('create-post');
     }

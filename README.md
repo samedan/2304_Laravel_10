@@ -68,6 +68,18 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 > /views/components/post.blade.php
 > hideAuthor in profile-posts.blade
 
+# Seed New data into the Database
+
+> php artisan db:seed > only adds data
+> php artisan migrate:fresh --seed > deletes old data
+
+## Search with Laravel Scout
+
+> composer require laravel/scout
+> php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+> 'use Searchable', 'function toSearchableArray' on the Post model
+> in .env add 'SCOUT_DRIVER=database'
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
