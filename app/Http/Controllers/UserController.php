@@ -65,8 +65,14 @@ class UserController extends Controller
 
     // PROFILE
     public function profile(User $user) {
-        $this->getSharedData($user);
+        $this->getSharedData($user); // common part of the page
         return view('profile-posts', ['posts' => $user->posts()->latest()->get()]);
+    }
+    // PROFILE Raw
+    public function profileRaw(User $user) {
+        return response()->json([
+            'theHTML'=> view('profile-posts-only', ['posts' => $user->posts()->latest()->get()] )->render(), 
+            'docTitle' => $user->username."'s Profile"]);
     }
 
     // FOLLOWERS
@@ -74,11 +80,23 @@ class UserController extends Controller
         $this->getSharedData($user);
         return view('profile-followers', ['followers' => $user->followers()->latest()->get()]);
     }
+    // PROFILE FOLLOWERS Raw
+    public function profileFollowersRaw(User $user) {
+        return response()->json([
+            'theHTML'=> view('profile-followers-only', ['followers' => $user->followers()->latest()->get()] )->render(), 
+            'docTitle' => $user->username."'s Followers"]);
+    }
 
-    // FOLLOWINGS
+    // PROFILE FOLLOWINGS
     public function profileFollowing(User $user) {
         $this->getSharedData($user);
         return view('profile-following', ['following' => $user->followingTheseUsers()->latest()->get()]);
+    }
+    // PROFILE FOLLOWINGS Raw
+    public function profileFollowingRaw(User $user) {
+        return response()->json([
+            'theHTML'=> view('profile-following-only', ['following' => $user->followingTheseUsers()->latest()->get()] )->render(), 
+            'docTitle' => "Who ".$user->username." follows"]);
     }
 
     // ShowCorrectHomepage

@@ -54,25 +54,10 @@ Route::get('/profile/{user:username}', // look for the user using 'username', no
      [UserController::class, 'profile']);
 Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
 Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
-
-// // CHAT Pusher routes
-// Route::post('/send-chat-message', function (Request $request) {
-//      $formFields = $request->validate([
-//           'textvalue' => 'required'
-//      ]);
-//      if(!trim(strip_tags($formFields['textvalue']))) {
-//           // if empty spaces return nothing
-//           return response()->noContent();
-//      }
-//      // broadcats a new instance of a ChatMessage event to others
-//      broadcast(new ChatMessage([
-//                'username' => auth()->user()->username, 
-//                'textvalue' => strip_tags($request->textvalue),
-//                'avatar' => auth()->user()->avatar
-//           ]))->toOthers();
-//      return response()->noContent();
-
-// })->middleware('mustBeLoggedIn');
+// PROFILE Raw routes
+Route::get('/profile/{user:username}/raw', [UserController::class, 'profileRaw'])->middleware('cache.headers:public;max_age=20;etag');
+Route::get('/profile/{user:username}/followers/raw', [UserController::class, 'profileFollowersRaw']);
+Route::get('/profile/{user:username}/following/raw', [UserController::class, 'profileFollowingRaw']);
 
 // Chat route
 Route::post('/send-chat-message', function (Request $request) {
