@@ -80,6 +80,18 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 > 'use Searchable', 'function toSearchableArray' on the Post model
 > in .env add 'SCOUT_DRIVER=database'
 
+## Create event & listener
+
+> in EventServiceProvider add lines:
+> use App\Events\OurExampleEvent;
+> use App\Listeners\OurExampleListener;
+
+> php artisan event:generate
+
+> 1. UserController add event(new ExampleEvent)
+> 2. ExampleEvent \_\_construct($theEvent) with the passed data
+> 3. ExampleListener handle($event), pass Log-> laravel.log
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
