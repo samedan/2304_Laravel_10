@@ -92,6 +92,22 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 > 2. ExampleEvent \_\_construct($theEvent) with the passed data
 > 3. ExampleListener handle($event), pass Log-> laravel.log
 
+## Broadcasting with Pusher - Real Time Socket connections
+
+> pusher.com & .env
+> composer require pusher/pusher-php-server
+
+> new event Events/ChatMessage
+> \_\_construct($chat), PrivateChannel('chatchannel')
+> routes/channels.php check for auth()
+
+> js Chat.js for the FrontEnd
+> resources/js/bootstrap.js -> import Echo from "laravel-echo"; import Pusher from "pusher-js";
+
+> layout.blade.php -> render div with username & avatar
+
+> /config/app.php -> enable Broadcast
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

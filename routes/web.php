@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\ChatMessage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -53,3 +55,39 @@ Route::get('/profile/{user:username}', // look for the user using 'username', no
 Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
 Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
 
+// // CHAT Pusher routes
+// Route::post('/send-chat-message', function (Request $request) {
+//      $formFields = $request->validate([
+//           'textvalue' => 'required'
+//      ]);
+//      if(!trim(strip_tags($formFields['textvalue']))) {
+//           // if empty spaces return nothing
+//           return response()->noContent();
+//      }
+//      // broadcats a new instance of a ChatMessage event to others
+//      broadcast(new ChatMessage([
+//                'username' => auth()->user()->username, 
+//                'textvalue' => strip_tags($request->textvalue),
+//                'avatar' => auth()->user()->avatar
+//           ]))->toOthers();
+//      return response()->noContent();
+
+// })->middleware('mustBeLoggedIn');
+
+// Chat route
+Route::post('/send-chat-message', function (Request $request) {
+     $formFields = $request->validate([
+       'textvalue' => 'required'
+     ]);
+   
+     if (!trim(strip_tags($formFields['textvalue']))) {
+       return response()->noContent();
+     }
+   
+     broadcast(new ChatMessage([
+          'username' =>auth()->user()->username, 
+          'textvalue' => strip_tags($request->textvalue), 
+          'avatar' => auth()->user()->avatar]))->toOthers();
+     return response()->noContent();
+   
+   })->middleware('mustBeLoggedIn');
