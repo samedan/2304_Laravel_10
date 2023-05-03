@@ -111,10 +111,19 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 > PostController -> Mail::to()
 > NewPostEmail.php -> envelope & content
 
-## Send Email
+## Send Email in Sync
 
 > MailTrap, SendGrid
 > php artisan make:mail NewPostEmail -> /app/Mail/NewPostMail.php
+
+## Send email async with JOB
+
+> php artisan make:job SendNewPostEmail -> SendNewPostEmail
+> .env -> QUEUE_CONNECTION=database
+> New Table: php artisan queue:table
+> php artisan migrate
+
+> Run the Job: -> php artisan queue:work
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
