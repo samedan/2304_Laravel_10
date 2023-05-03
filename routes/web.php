@@ -54,10 +54,13 @@ Route::get('/profile/{user:username}', // look for the user using 'username', no
      [UserController::class, 'profile']);
 Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
 Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
-// PROFILE Raw routes
-Route::get('/profile/{user:username}/raw', [UserController::class, 'profileRaw'])->middleware('cache.headers:public;max_age=20;etag');
-Route::get('/profile/{user:username}/followers/raw', [UserController::class, 'profileFollowersRaw']);
-Route::get('/profile/{user:username}/following/raw', [UserController::class, 'profileFollowingRaw']);
+// PROFILE Raw routes CACHE
+Route::middleware('cache.headers:public;max_age=20;etag')->group(function() {
+  Route::get('/profile/{user:username}/raw', [UserController::class, 'profileRaw']);
+  Route::get('/profile/{user:username}/followers/raw', [UserController::class, 'profileFollowersRaw']);
+  Route::get('/profile/{user:username}/following/raw', [UserController::class, 'profileFollowingRaw']);
+});
+
 
 // Chat route
 Route::post('/send-chat-message', function (Request $request) {
