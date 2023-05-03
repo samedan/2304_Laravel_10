@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\NewPostEmail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -50,7 +52,7 @@ class PostController extends Controller
         return view('single-post', ['post'=> $post]);        
     }
     
-    // POST Post
+    // POST Post & Send Email
     public function storeNewPost(Request $request) {
         $incomingFields = $request->validate([
             'title'=>'required',
@@ -60,6 +62,11 @@ class PostController extends Controller
         $incomingFields['body'] = strip_tags($incomingFields['body']);
         $incomingFields['user_id'] = auth()->id();
         $newPost = Post::create($incomingFields);
+        // send email
+        Mail::to(auth()->user()->email)->send(new NewPostEmail([
+            'name' => auth()->user()->username,
+            'title' => $newPost->title
+        ]));
         return redirect("/post/{$newPost->id}")->with("success", "New post succesfully created");
     }
 
