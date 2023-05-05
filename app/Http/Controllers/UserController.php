@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Follow;
 use Illuminate\Http\Request;
 use App\Events\OurExampleEvent;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -99,13 +101,21 @@ class UserController extends Controller
             'docTitle' => "Who ".$user->username." follows"]);
     }
 
-    // ShowCorrectHomepage
+    // ShowCorrectHomepage & CACHE
     public function showCorrectHomepage() {
         if (auth()->check()) { 
             // if logged in
             return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->paginate(4)]);
         } else {
-            return view('homepage');
+            $postCount = Cache::remember(
+                "postCount", // what to remember
+                20, // for how many seconds
+                function() {    // what to do if data doesn't exist in cache
+                    sleep(5);
+                    return Post::count();
+                }   
+            );
+            return view('homepage', ['postCount' => $postCount]);
         }
     }
 
