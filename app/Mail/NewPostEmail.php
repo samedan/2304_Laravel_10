@@ -18,7 +18,7 @@ class NewPostEmail extends Mailable
      */
     public function __construct(public $data)
     {
-        
+        //
     }
 
     /**
@@ -38,10 +38,7 @@ class NewPostEmail extends Mailable
     {
         return new Content(
             view: 'new-post-email',
-            with: [
-                'title' => $this->data['title'],
-                'name' => $this->data['name'],
-                ]
+            with: ['title' => $this->data['title'], 'name' => $this->data['name']]
         );
     }
 

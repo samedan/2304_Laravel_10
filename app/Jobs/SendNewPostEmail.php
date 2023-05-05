@@ -2,23 +2,26 @@
 
 namespace App\Jobs;
 
+use App\Mail\NewPostEmail;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class SendNewPostEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $incoming; // coming from PostController
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct($incoming)
     {
-        //
+        $this->incoming = $incoming;
     }
 
     /**
@@ -26,6 +29,9 @@ class SendNewPostEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        Mail::to($this->incoming['sendTo'])->send(new NewPostEmail([
+            'name' => $this->incoming['name'],
+            'title' => $this->incoming['title'],
+        ]));
     }
 }
