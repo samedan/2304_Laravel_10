@@ -109,9 +109,8 @@ class UserController extends Controller
         } else {
             $postCount = Cache::remember(
                 "postCount", // what to remember
-                20, // for how many seconds
+                120, // for how many seconds
                 function() {    // what to do if data doesn't exist in cache
-                    sleep(5);
                     return Post::count();
                 }   
             );
@@ -131,6 +130,7 @@ class UserController extends Controller
         auth()->login($user); // login the registered user with a cookie
         return redirect('/')->with('success', 'Thank you for creating your account');
     }
+
     // LOGIN
     public function login(Request $request) {
         $incomingFields = $request->validate([
@@ -159,6 +159,22 @@ class UserController extends Controller
             'action' => 'logout']));
         auth()->logout();        
         return redirect("/")->with('success', 'You are now logged out.');;
+    }
+
+
+    /// API ////////////////////////////////
+    // LOGIn API /api/login
+    public function loginApi(Request $request) {
+        $incomingFields = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        if (auth()->attempt($incomingFields)) {
+            $user = User::where('username', $incomingFields['username'])->first();
+            $token = $user->createToken('ourapptoken')->plainTextToken;
+            return $token;
+        }
+        return 'Not the correct user/pass';
     }
     
 }

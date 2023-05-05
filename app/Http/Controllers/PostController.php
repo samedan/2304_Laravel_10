@@ -78,5 +78,26 @@ class PostController extends Controller
         return view('create-post');
     }
 
+    /// API ////////////////////////////////
+    // LOGIn API /api/login
+    // POST Post & Send Email /api/create-post
+    public function storeNewPostApi(Request $request) {
+        $incomingFields = $request->validate([
+            'title'=>'required',
+            'body'=>'required',
+        ]);
+        $incomingFields['title'] = strip_tags($incomingFields['title']);
+        $incomingFields['body'] = strip_tags($incomingFields['body']);
+        $incomingFields['user_id'] = auth()->id();
+        $newPost = Post::create($incomingFields);
+        // send email
+        dispatch(new SendNewPostEmail([
+            'sendTo' => auth()->user()->email,
+            'name' => auth()->user()->username,
+            'title' => $newPost->title
+        ]));
+       
+        return $newPost->id;
+    }
     
 }
