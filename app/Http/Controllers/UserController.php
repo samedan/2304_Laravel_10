@@ -170,7 +170,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
         if (auth()->attempt($incomingFields)) {
-            $user = User::where('username', $incomingFields['username'])->first();
+            $user = User::where('username', $incomingFields['username'])->first(); // 'first' get the first result of the results array
             $token = $user->createToken('ourapptoken')->plainTextToken;
             return $token;
         }

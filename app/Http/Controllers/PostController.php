@@ -99,5 +99,13 @@ class PostController extends Controller
        
         return $newPost->id;
     }
+
+      // DELETE API Post /api/delete-post/xx
+      public function deleteApi(Post $post) {
+        // check the permission
+        $post->delete();
+        return "post deleted";
+    }
+    
     
 }
