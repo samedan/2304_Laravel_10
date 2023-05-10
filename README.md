@@ -135,6 +135,88 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 > php artisan schedule:work -> it starts the CRON job
 
+############################
+
+## Docker
+
+> Start services:
+> /etc/init.d/mysql start
+> /etc/init.d/php8.1-fpm start
+> /etc/init.d/nginx start
+> /etc/init.d/cron start
+
+> Start services all at once:
+> touch /ourstartup
+> nano /ourstartup
+> chmod u+x /ourstartup -> make the file executable for this user
+> /ourstartup -> starts services all at once
+
+> docker run -dit -p 80:80 ubuntu:22.04
+
+## Docker Terminal
+
+> apt update
+> apt install nginx
+> /etc/init.d/nginx start --> http://localhost/ only for Docker
+> apt install curl nano php-cli unzip php8.1-fpm php-mysql php-mbstring php-xml php-bcmath php-curl php8.1-gd
+> cd ~ -> pwd=show folder
+> curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+> php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+> composer --version ->Test
+> apt install mysql-server
+> /etc/init.d/mysql start --> http://localhost/ only for Docker
+
+> mysql
+> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'qwertqwerty';
+> exit
+> mysql_secure_installation
+> mysql -u root -p
+> CREATE DATABASE ourlaravelapp;
+> CREATE USER 'ourlaraveluser'@'%' IDENTIFIED WITH mysql_native_password BY 'qwertyqwerty';
+> GRANT ALL ON ourlaravelapp.\* TO 'ourlaraveluser'@'%';
+> exit
+
+## Start/Stop Docker
+
+> Stop
+> nano /ourstartup
+> /ourstartup
+
+## Copy files to docker (in VSC terminal): docker cp C:\_apps_2023\php\23.04_laravel_udemy-beginners_laravel10\ourfirstsapp DockerNamedOwnContainer:/var/www/ourapp
+
+> pwd > ls > cd /var/www > ls > cd ourapp > ls
+> Start site on Docker server: cd /etc/nginx > ls > cd sites-available > ls >(default file)
+> Create an empty default file in: rm default > touch default > nano default
+> copy content from /html_templates/docker-nginx.txt to default -> save
+> Restart nginx: /etc/init.d/nginx restart
+> Restart php: /etc/init.d/php8.1-fpm start
+> Test app: localhost -> cd /var/www/ourapp > ls
+
+## Assign access to /storage/ folder and create Link
+
+> chown -R www-data:www-data storage
+> php artisan storage:link
+
+## Database .env
+
+> nano .env -> ourlaraveluser, ourlaravelapp
+> Migrations: cd /var/www/ourapp -> php artisan migrate
+> Avatar size: nano /etc/php/8.1/fpm/php.ini
+> Restart: /etc/init.d/php8.1-fpm restart
+
+## Automate email sending with CRON Jobs
+
+> https://crontab.guru/every-day-at-1am
+> apt install cron
+> crontab -e -> Edit the Cron job list
+> /etc/init.d/cron start
+
+## CACHE Redis Server
+
+> apt install redis-server
+> nano .env
+> /etc/init.d/redis-server start
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
